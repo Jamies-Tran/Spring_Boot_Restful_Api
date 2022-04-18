@@ -1,0 +1,13 @@
+package com.test.user;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+public class UserDetailImpl {
+	public static UserDetailsService users(String username, String password) {
+		UserDetails user = User.builder().username(username).password(password).roles("USER").build();
+		return new InMemoryUserDetailsManager(user);
+	}
+}

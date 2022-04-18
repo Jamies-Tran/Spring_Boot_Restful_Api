@@ -1,0 +1,16 @@
+package com.store.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.store.interfaces.converter.IDaoConverter;
+
+@RestController
+public class AccountApi {
+	
+	@Autowired
+	private @Qualifier("account") IDaoConverter _daoConverter;
+	
+	
+}

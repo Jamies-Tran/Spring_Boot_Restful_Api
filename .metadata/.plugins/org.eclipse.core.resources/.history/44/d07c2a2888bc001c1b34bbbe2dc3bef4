@@ -1,0 +1,48 @@
+package com.test.ecoder;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+
+public class MyPasswordEncoder {
+	
+	private String idForEncoder;
+	
+	private Map<String, PasswordEncoder> encoders = new HashMap<>();
+
+	public MyPasswordEncoder() {
+		super();
+	}
+	
+	public MyPasswordEncoder(String idForEncoder) {
+		super();
+		this.idForEncoder = idForEncoder;
+	}
+
+	private void addEncoders() {
+		encoders.put("bcrypt", new BCryptPasswordEncoder());
+		encoders.put("argon2", new Argon2PasswordEncoder());
+		encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+		encoders.put("srcypt", new SCryptPasswordEncoder());
+	}
+	
+	public String encode(String password) {
+		
+	}
+
+
+	public String getIdForEncoder() {
+		return idForEncoder;
+	}
+
+	public void setIdForEncoder(String idForEncoder) {
+		this.idForEncoder = idForEncoder;
+	}
+	
+	
+}

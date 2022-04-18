@@ -1,0 +1,43 @@
+package com.test;
+
+import java.util.Scanner;
+
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.test.encoder.MyPasswordEncoder;
+import com.test.mydatasource.MyDataSource;
+import com.test.user.MyUserDetailImpl;
+
+public class MainApplication {
+	public static void main(String[] args) {
+		final Scanner sc = new Scanner(System.in);
+		System.out.print("Username: ");
+		String username = sc.nextLine();
+		System.out.print("Password: ");
+		String password = sc.nextLine();
+		System.out.print("Encoder: ");
+		String idForEncoder = sc.nextLine();
+		//MyDataSource dataSource = new MyDataSource();
+		//UserDetailsService userService = MyUserDetailImpl.jdbcUsers(username, encoder.encode(password), dataSource.dataSource());
+//		UserDetailsService userService = MyUserDetailImpl.users(username, encoder.encode(password));
+//		UserDetails user = userService.loadUserByUsername(username);
+//		System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword() + " Authority: " + user.getAuthorities());
+		MyPasswordEncoder encoder = new MyPasswordEncoder(idForEncoder);
+		UserDetailsService userService = MyUserDetailImpl.users(username, password);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+		DaoAuthenticationProvider daoAuth = new DaoAuthenticationProvider();
+		daoAuth.setUserDetailsService(userService);
+		daoAuth.setPasswordEncoder(new BCryptPasswordEncoder());
+		ProviderManager provider = new ProviderManager(daoAuth);
+		Authentication auth = provider.authenticate(authentication);
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		System.out.println("Username: " + auth.getName() + " Password: " + auth.getCredentials() + " Authority: " + auth.getAuthorities());
+	}
+}

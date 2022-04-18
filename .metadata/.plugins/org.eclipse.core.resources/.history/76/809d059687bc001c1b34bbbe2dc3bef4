@@ -1,0 +1,5 @@
+package com.test.ecoder;
+
+public class MyPasswordEncoder {
+
+}

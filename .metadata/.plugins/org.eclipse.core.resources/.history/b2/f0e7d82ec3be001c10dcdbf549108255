@@ -1,0 +1,22 @@
+package com.test.user;
+
+import javax.sql.DataSource;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
+
+public class UserDetailImpl {
+	
+	public static UserDetailsService users(String username, String password) {
+		UserDetails user = User.builder().username(username).password(password).roles("USER").build();
+		return new InMemoryUserDetailsManager(user);
+	}
+	
+	public static UserDetailsManager jdbcUsers(String username, String password, DataSource datasource) {
+		UserDetails user = User.builder().username(null)
+	}
+	
+}

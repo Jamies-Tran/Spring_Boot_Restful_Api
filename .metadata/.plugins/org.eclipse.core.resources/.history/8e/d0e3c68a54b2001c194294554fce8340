@@ -1,0 +1,45 @@
+package com.store.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.store.dao.AccountDAO;
+import com.store.dto.AccountDTO;
+import com.store.interfaces.converter.IDaoConverter;
+import com.store.interfaces.converter.IDtoConverter;
+import com.store.service.IAccountService;
+
+@RestController
+public class AccountApi {
+	
+	@Autowired
+	@Qualifier("account") 
+	private IDaoConverter<AccountDTO, AccountDAO> _daoConverter;
+	
+	@Autowired
+	@Qualifier("account") 
+	private IDtoConverter<AccountDAO, AccountDTO> _dtoConverter;
+	
+	@Autowired
+	private IAccountService _accountService;
+	
+	@GetMapping(name = "/account")
+	public AccountDTO Get(Long Id) {
+		AccountDAO fromDB = _accountService.FindById(Id);
+		AccountDTO result = _dtoConverter.Convert(fromDB);
+		return result;
+	}
+	
+	@PostMapping(name = "/account")
+	public AccountDTO Save(@RequestBody AccountDTO clientInput) {
+		AccountDAO  input = _daoConverter.Convert(clientInput);
+		AccountDAO result = _accountService.Insert(input);
+		return result;
+	}
+	
+}

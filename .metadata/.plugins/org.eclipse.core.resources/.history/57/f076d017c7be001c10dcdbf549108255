@@ -1,0 +1,32 @@
+package com.test;
+
+import java.util.Scanner;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import com.test.encoder.MyPasswordEncoder;
+import com.test.user.UserDetailImpl;
+
+public class MainApplication {
+	public static void main(String[] args) {
+		final Scanner sc = new Scanner(System.in);
+		String username;
+		String password;
+		String idForEncoders;
+		// input for username;
+		System.out.print("Username: ");
+		username = sc.nextLine();
+		// input for password;
+		System.out.print("Password: ");
+		password = sc.nextLine();
+		// input for id encoder;
+		System.out.print("Encoder: ");
+		idForEncoders = sc.nextLine();
+		MyPasswordEncoder encoder = new MyPasswordEncoder(idForEncoders);
+		UserDetailsService users = UserDetailImpl.users(username, encoder.encode(password));
+		UserDetails user = users.loadUserByUsername(username);
+		System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword());
+	}
+}

@@ -1,0 +1,14 @@
+package com.test.datasource;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+public class MyDataSource {
+	
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("classpath:org/springframework/security/core/userdetails/jdbc/users.ddl").build();
+	}
+	
+}

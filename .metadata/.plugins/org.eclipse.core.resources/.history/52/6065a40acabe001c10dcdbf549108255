@@ -1,0 +1,23 @@
+package com.test;
+
+import java.util.Scanner;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import com.test.mydatasource.MyDataSource;
+import com.test.user.MyUserDetailImpl;
+
+public class MainApplication {
+	public static void main(String[] args) {
+		final Scanner sc = new Scanner(System.in);
+		System.out.print("Username: ");
+		String username = sc.nextLine();
+		System.out.print("Password: ");
+		String password = sc.nextLine();
+		MyDataSource dataSource = new MyDataSource();
+		UserDetailsService userService = MyUserDetailImpl.jdbcUsers(username, password, dataSource.dataSource());
+		UserDetails user = userService.loadUserByUsername(username);
+		System.out.println("Username: " + user.getUsername() + "Password: " + user.getPassword() + "Authority: " + user.getAuthorities());
+	}
+}
