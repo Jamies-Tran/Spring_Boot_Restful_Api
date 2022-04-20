@@ -43,6 +43,7 @@
 	</section>
 	<section name="MavenProjectWizardArtifactPage">
 		<list key="groupId">
+			<item value="com.jame"/>
 			<item value="com.test"/>
 			<item value="com.store"/>
 			<item value="com.bakery"/>
@@ -50,6 +51,7 @@
 		<list key="name">
 		</list>
 		<list key="artifactId">
+			<item value="TechnicalBlog"/>
 			<item value="ExperienceProject"/>
 			<item value="BakeryStoreManagement"/>
 			<item value="JameStoreManagement"/>
